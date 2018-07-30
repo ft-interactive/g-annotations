@@ -4,7 +4,7 @@
     (factory((global.gAnnotations = global.gAnnotations || {}),global.d3));
 }(this, function (exports,d3) { 'use strict';
 
-    function annotations() {
+    function draww() {
     	let lineWidth = 100
         let plotDim = [100,100];
         let yScale = d3.scaleLinear();
@@ -51,7 +51,7 @@
                 .attr('y',d => yScale(d.targetY))
                 .attr('dy',0)
                 .text((d) => {
-                    return d.title + ' ' + d.note
+                    return d.title;
                 })
                 .call(wrap,lineWidth,d => xScale(d.targetX),"highlighted-label")
                 .attr('transform', function(d, a) {
@@ -313,7 +313,7 @@
         return label;
     };
 
-    exports.annotations = annotations;
+    exports.annotations = draww;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
