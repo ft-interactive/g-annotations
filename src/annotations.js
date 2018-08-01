@@ -5,8 +5,12 @@ export default function() {
     let plotDim = [100,100];
     let yScale = d3.scaleLinear();
     let xScale = d3.scaleLinear();
+    let scaleFactor = 1
     let seriesNames  = []; // eslint-disable-line
     let rem = 16;
+    const sqrtScale = d3.scaleSqrt()
+            .domain([0, 100])
+            .range([0,(rem * scaleFactor)]);
     let formatDecimal = d3.format(".2f")
     let frameName = ''
     const colourScale = d3.scaleOrdinal();
@@ -228,7 +232,7 @@ export default function() {
             if (el.type ==='curve') {
                 pathString  = "M " + newX + "," + (newY - rem) + " C " + c1x + "," + c1y + " " + c2x + "," + c2y + " " + (targetX) + "," + (targetY);
             }
-            if (el.type ==='curve' || el.type ==='') {
+            if (el.type ==='arc' || el.type ==='') {
                 pathString  = "M" + (newX) + "," + (newY - rem)  + "Q" + c1x + "," + c1y + " "+  (targetX + offsetX) + "," +(targetY + offsetY);
             }
             return pathString
@@ -293,6 +297,16 @@ export default function() {
     label.plotDim = (d) => {
         if (!d) return window.plotDim;
         plotDim = d;
+        return label;
+    };
+    label.scaleFactor = (d) => {
+        if (!d) return scaleFactor;
+        scaleFactor = d;
+        return label;
+    };
+    label.sqrtScale = (d) => {
+        if (!d) return sqrtScale;
+        sqrtScale = d;
         return label;
     };
     label.xScale = (d) => {
