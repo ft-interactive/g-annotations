@@ -9,8 +9,8 @@ export default function() {
     let seriesNames  = []; // eslint-disable-line
     let rem = 16;
     const sqrtScale = d3.scaleSqrt()
-            .domain([0, 100])
-            .range([0,(rem * scaleFactor)]);
+            .domain([-1, 1])
+            .range([-1, 1]);
     let formatDecimal = d3.format(".2f")
     let frameName = ''
     const colourScale = d3.scaleOrdinal();

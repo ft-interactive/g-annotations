@@ -9,8 +9,12 @@
         let plotDim = [100,100];
         let yScale = d3.scaleLinear();
         let xScale = d3.scaleLinear();
+        let scaleFactor = 1
         let seriesNames  = []; // eslint-disable-line
         let rem = 16;
+        const sqrtScale = d3.scaleSqrt()
+                .domain([-1, 1])
+                .range([-1, 1]);
         let formatDecimal = d3.format(".2f")
         let frameName = ''
         const colourScale = d3.scaleOrdinal();
@@ -51,7 +55,7 @@
                 .attr('y',d => yScale(d.targetY))
                 .attr('dy',0)
                 .text((d) => {
-                    return d.title + ' ' + d.note
+                    return d.title;
                 })
                 .call(wrap,lineWidth,d => xScale(d.targetX),"highlighted-label")
                 .attr('transform', function(d, a) {
@@ -232,7 +236,7 @@
                 if (el.type ==='curve') {
                     pathString  = "M " + newX + "," + (newY - rem) + " C " + c1x + "," + c1y + " " + c2x + "," + c2y + " " + (targetX) + "," + (targetY);
                 }
-                if (el.type ==='curve' || el.type ==='') {
+                if (el.type ==='arc' || el.type ==='') {
                     pathString  = "M" + (newX) + "," + (newY - rem)  + "Q" + c1x + "," + c1y + " "+  (targetX + offsetX) + "," +(targetY + offsetY);
                 }
                 return pathString
@@ -297,6 +301,16 @@
         label.plotDim = (d) => {
             if (!d) return window.plotDim;
             plotDim = d;
+            return label;
+        };
+        label.scaleFactor = (d) => {
+            if (!d) return scaleFactor;
+            scaleFactor = d;
+            return label;
+        };
+        label.sqrtScale = (d) => {
+            if (!d) return sqrtScale;
+            sqrtScale = d;
             return label;
         };
         label.xScale = (d) => {
