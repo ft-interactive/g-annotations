@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-export default function() {
+export default function draww() {
 	let lineWidth = 100
     let plotDim = [100,100];
     let yScale = d3.scaleLinear();

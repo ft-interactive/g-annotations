@@ -4,7 +4,7 @@
     (factory((global.gAnnotations = global.gAnnotations || {}),global.d3));
 }(this, function (exports,d3) { 'use strict';
 
-    function annotations() {
+    function draww() {
     	let lineWidth = 100
         let plotDim = [100,100];
         let yScale = d3.scaleLinear();
@@ -327,7 +327,7 @@
         return label;
     };
 
-    exports.annotations = annotations;
+    exports.annotations = draww;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
