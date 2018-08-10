@@ -281,12 +281,6 @@
             frameName = d;
             return label;
         };
-        // label.sizeScale = (d) => {
-        //     if (!d) return sizeScale;
-        //     sizeScale = d;
-        //     intersect = true
-        //     return label;
-        // };
         label.lineWidth = (d) => {
             if (!d) return lineWidth;
             lineWidth = d;
