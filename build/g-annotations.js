@@ -64,8 +64,8 @@
             textLabel.append('path')
                 .attr('id', 'arrow')
                 .attr('class', 'annotation')
-                .attr('stroke', '#000000')// remove when class is updfated to include definition for paths
-                .attr('stroke-width', 1)// remove when class is updfated to include definition for paths
+                // .attr('stroke', '#000000')// remove when class is updfated to include definition for paths
+                // .attr('stroke-width', 1)// remove when class is updfated to include definition for paths
                 .attr("d", function(d) {
                     let label = d3.select(this.parentNode).select('text');
                     let translate = [label.node().transform.baseVal[0].matrix.e, label.node().transform.baseVal[0].matrix.f];
