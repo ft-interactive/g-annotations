@@ -5,8 +5,7 @@
 }(this, function (exports,d3) { 'use strict';
 
     function draww() {
-    	let lineWidth = 100
-        let plotDim = [100,100];
+    	let plotDim = [100,100];
         let yScale = d3.scaleLinear();
         let xScale = d3.scaleLinear();
         let scaleFactor = 1
@@ -22,7 +21,17 @@
 
             const annotation = parent.append('g')
                 .on('mouseover', pointer);
+            let yOrdinal = false;
+            let xOrdinal = false
             
+            //test for ordinal axis
+            if(typeof yScale.bandwidth === "function") {
+                yOrdinal = true
+            }
+            if(typeof xScale.bandwidth === "function") {
+                xOrdinal = true
+            }
+                    
             annotation.selectAll('line')
             .data(d => d.annotations.filter((el) => {return el.type === 'threshold'}))
             .enter()
@@ -64,7 +73,7 @@
             textLabel.append('path')
                 .attr('id', 'arrow')
                 .attr('class', 'annotation')
-                // .attr('stroke', '#000000')// remove when class is updfated to include definition for paths
+                .attr('fill', 'none')// remove when class is updfated to include definition for paths
                 // .attr('stroke-width', 1)// remove when class is updfated to include definition for paths
                 .attr("d", function(d) {
                     let label = d3.select(this.parentNode).select('text');
@@ -102,7 +111,6 @@
                 .call(d3.drag()
                     .subject(function() {
                         const textEl = d3.select(this).select('text');
-                        console.log (textEl)
                         return {x: textEl.attr('x'), y: textEl.attr('y')};
                     })
                     .on('start', dragstarted)
@@ -135,6 +143,12 @@
                 let labelDim = labelDimansions(label);
                 let targetX = xScale(el.targetX)
                 let targetY = yScale(el.targetY)
+                if (yOrdinal) {
+                    targetY = yScale(el.targetY) + (yScale.bandwidth() * .5)
+                }
+                if (xOrdinal) {
+                    targetX = yScale(el.targetX) + (xScale.bandwidth() * .5)
+                }
                 let metrics = [sourceX,(sourceX + labelDim[0]),sourceY,(sourceY + labelDim[1])]
                 //console.log('metrics', metrics);
                 let newX;
