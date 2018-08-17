@@ -5,8 +5,8 @@
 }(this, function (exports,d3) { 'use strict';
 
     function draww() {
-    	let lineWidth = 100;
-        let plotDim = [100,100];
+        let lineWidth = 20
+    	let plotDim = [100,100];
         let yScale = d3.scaleLinear();
         let xScale = d3.scaleLinear();
         let scaleFactor = 1
