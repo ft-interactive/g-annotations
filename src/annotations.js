@@ -2,7 +2,11 @@ import * as d3 from 'd3';
 
 export default function draww() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	let lineWidth = 100;
+=======
+	let lineWidth = 100
+>>>>>>> parent of d0f5304... Add ordinal test to source file
 =======
 	let lineWidth = 100
 >>>>>>> parent of d0f5304... Add ordinal test to source file
