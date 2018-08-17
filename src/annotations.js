@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 
 export default function draww() {
 	let plotDim = [100,100];
+    let linewidth = 5;
     let yScale = d3.scaleLinear();
     let xScale = d3.scaleLinear();
     let scaleFactor = 1
