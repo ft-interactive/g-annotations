@@ -148,7 +148,7 @@
                     targetY = yScale(el.targetY) + (yScale.bandwidth() * .5)
                 }
                 if (xOrdinal) {
-                    targetX = yScale(el.targetX) + (xScale.bandwidth() * .5)
+                    targetX = xScale(el.targetX) + (xScale.bandwidth() * .5)
                 }
                 let metrics = [sourceX,(sourceX + labelDim[0]),sourceY,(sourceY + labelDim[1])]
                 //console.log('metrics', metrics);
