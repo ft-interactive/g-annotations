@@ -1,12 +1,12 @@
 import * as d3 from 'd3';
 
 export default function draww() {
-    let lineWidth = 20
-	let plotDim = [100,100];
+    let lineWidth = 100;
+    let plotDim = [100, 100];
     let yScale = d3.scaleLinear();
     let xScale = d3.scaleLinear();
     let scaleFactor = 1
-    let seriesNames  = []; // eslint-disable-line
+    let seriesNames = []; // eslint-disable-line
     let rem = 16;
     let sizeScale = d3.scaleSqrt();
     let formatDecimal = d3.format(".2f")
@@ -16,6 +16,7 @@ export default function draww() {
 
     function label(parent) {
 
+        const threshold = parent.append('g')
         const annotation = parent.append('g')
             .on('mouseover', pointer);
         let yOrdinal = false;
@@ -28,31 +29,45 @@ export default function draww() {
         if(typeof xScale.bandwidth === "function") {
             xOrdinal = true
         }
-                
-        annotation.selectAll('line')
-        .data(d => d.annotations.filter((el) => {return el.type === 'threshold'}))
-        .enter()
-        .append('line')
-            .attr('class', 'annotation')
-            .attr('x1', d => xScale(d.targetX))
-            .attr('x2', d => xScale(d.targetX))
-            .attr('y1', yScale.range()[0])
-            .attr('y2', yScale.range()[1])
-        annotation.selectAll('text')
-        .data(d => d.annotations.filter((el) => {return el.type === 'threshold'}))
-        .enter()
-        .append('text')
-            .attr('class', 'highlighted-label')
-            .attr('text-anchor', 'middle')
-            .attr('x',d => xScale(d.targetX))
-            .attr('y', yScale.range()[1] - (rem / 2))
-            .text(d => d.title);
 
-        let textLabel =annotation.selectAll('text')
-        .data(d => d.annotations.filter((el) => {return el.type === 'curve' || el.type === 'elbow' || el.type === 'arc'}))
-        .enter()
-        .append('g')
+        threshold.selectAll('line')
+            .data(d => {
+                if (d.type === 'vertical') {
+                    return ([d])
+                }
+                return []
+            })
+            .enter()
+            .append('line')
+                .attr('class', 'annotation')
+                .attr('x1', d => xScale(d.targetX))
+                .attr('x2', d => xScale(d.targetX))
+                .attr('y1', yScale.range()[0])
+                .attr('y2', yScale.range()[1])
+        threshold.selectAll('text')
+             .data(d => {
+                if (d.type === 'vertical') {
+                    return ([d])
+                }
+                return []
+            })
+             .enter()
+             .append('text')
+                .attr('class', 'highlighted-label')
+                .attr('text-anchor', 'middle')
+                .attr('x', d => xScale(d.targetX))
+                .attr('y', yScale.range()[1] - (rem / 2))
+                .text(d => d.title);
 
+        let textLabel = annotation.selectAll('text')
+            .data(d => {
+                if (d.type === 'curve'|| d.type === 'elbow' || d.type === 'arc') {
+                    return ([d])
+                }
+                return []
+            })
+            .enter()
+            .append('g')
         textLabel.append('text')
             .attr('class', 'highlighted-label')
             .attr('x',d => xScale(d.targetX))
@@ -144,7 +159,7 @@ export default function draww() {
                 targetY = yScale(el.targetY) + (yScale.bandwidth() * .5)
             }
             if (xOrdinal) {
-                targetX = xScale(el.targetX) + (xScale.bandwidth() * .5)
+                targetX = yScale(el.targetX) + (xScale.bandwidth() * .5)
             }
             let metrics = [sourceX,(sourceX + labelDim[0]),sourceY,(sourceY + labelDim[1])]
             //console.log('metrics', metrics);
